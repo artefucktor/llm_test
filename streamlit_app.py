@@ -2,8 +2,6 @@ import streamlit as st
 from typing import Generator
 from groq import Groq
 
-from context import SYSTEM_MESSAGE
-
 MODEL = "gemma2-9b-it"
 
 
@@ -17,7 +15,7 @@ client = Groq(
 
 # Initialize chat history and selected model
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": SYSTEM_MESSAGE}]
+    st.session_state.messages = [{"role": "system", "content": st.secrets['SYSTEM_MESSAGE']}]
 
 if "selected_model" not in st.session_state:
     st.session_state.selected_model = None
@@ -47,7 +45,7 @@ model_option = 'llama3-70b-8192'
 
 # Detect model change and clear chat history if model has changed
 if st.session_state.selected_model != model_option:
-    st.session_state.messages = [{"role": "system", "content": SYSTEM_MESSAGE}]
+    st.session_state.messages = [{"role": "system", "content": st.secrets['SYSTEM_MESSAGE']}]
     st.session_state.selected_model = model_option
 
 max_tokens_range = models[model_option]["tokens"]
